@@ -1,0 +1,21 @@
+# Joomla Ignore - generic
+cache/*
+!cache/index.html
+tmp/*
+!tmp/index.html
+administrator/cache/*
+!administrator/cache/index.html
+t3-assets/*
+!t3-assets/index.html
+components/com_sh404sef/cache/*
+!components/com_sh404sef/cache/index.html
+
+# Misc
+.idea
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
