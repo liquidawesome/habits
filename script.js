@@ -1,25 +1,26 @@
 const elements = {
-	habitInput: document.querySelector('.habit-input'),
+	habitName: document.querySelector('.habit__name'),
+	habitAmount: document.querySelector('.habit__amount'),
+	habitPeriod: document.querySelector('.habit__period'),
 	habitList: document.querySelector('.habit-list')
 };
 
-const addHabit = (name) => {
+const addHabit = (name, amount, period, current = 0) => {
 	const markup = `
 	<div class="habit-item">
 		<div>${name}</div>
 		<div>Description?</div>
-		<div>50/100 | <progress value="25" max="100"></progress></div>
+		<div>${current}/${amount} | <progress value="${current}" max="${amount}"></progress></div>
 	</div>
 	`;
 	elements.habitList.insertAdjacentHTML('beforeend', markup);
 }
 
-document.querySelector('.habit-form > .btn').addEventListener('click', e => {
-	const habit_name = elements.habitInput.value;
+document.querySelector('.habit-form').addEventListener('submit', e => {
+	e.preventDefault();
 
 	// Clear field
-	elements.habitInput.value = '';
+	elements.habitName.value = '';
 
-	addHabit(habit_name);
-	console.log(habit_name);
+	addHabit(elements.habitName.value, elements.habitAmount.value, elements.habitPeriod.value);
 });

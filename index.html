@@ -18,8 +18,22 @@
 			<h1>Habits Tracker</h1>
 		</div>
 		<div class="container body">
-			<div class="habit-form">
-				Add a Habit: <input type="text" class="habit-input"><button class="btn btn-primary">Add</button>
+			<div>
+				<strong>Add a Habit</strong>
+				<form class="habit-form">
+					<div class="form-group">
+						Habit Name: <input type="text" class="habit__name">
+					</div>
+					<div class="form-group">
+						Habit Repetition: <input type="number" class="habit__amount" value="1" min="1"> time(s) every
+						<select class="habit__period">
+							<option>Day</option>
+							<option>Week</option>
+							<option>Month</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary">Add</button>
+				</form>
 			</div>
 			<div class="habit-list"></div>
 		</div>
