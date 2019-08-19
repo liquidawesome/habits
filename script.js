@@ -28,12 +28,29 @@ const addHabit = (name, amount, period, current = 0) => {
 	const markup = `
 	<div class="habit-item">
 		<div>${name}</div>
-		<div>${current}/${amount} | <progress value="${current}" max="${amount}"></progress></div>
+		<div class="habit__progress">${current}/${amount} | <progress value="${current}" max="${amount}"></progress></div>
+		<div class="habit__update">
+		<button class="btn btn-secondary" data-update="-25">-25</button>
+		<button class="btn btn-secondary" data-update="-1">-1</button>
+		<button class="btn btn-secondary" data-update="+1">+1</button>
+		<button class="btn btn-secondary" data-update="+25">+25</button>
+		</div>
 		<div>${remaining} left</div>
 	</div>
 	`;
 	elements.habitList.insertAdjacentHTML('beforeend', markup);
 }
+
+const updateCount = (update, current = 0) => {
+	const updateType = update.charAt(0);
+	const updateValue = update.substring(1);
+
+	if (updateType === '+') {
+		current += updateValue;
+	} else if (updateType === '-') {
+		current -= updateValue;
+	}
+};
 
 document.querySelector('.habit-form').addEventListener('submit', e => {
 	e.preventDefault();
@@ -41,4 +58,11 @@ document.querySelector('.habit-form').addEventListener('submit', e => {
 
 	// Clear field
 	elements.habitName.value = '';
+});
+
+document.querySelector('.habit-list').addEventListener('click', e => {
+	const update = e.target.dataset.update;
+	if (update) {
+		updateCount(update);
+	}
 });
