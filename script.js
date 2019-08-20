@@ -28,12 +28,12 @@ const addHabit = (name, amount, period, current = 0) => {
 	const markup = `
 	<div class="habit-item">
 		<div>${name}</div>
-		<div class="habit__progress">${current}/${amount} | <progress value="${current}" max="${amount}"></progress></div>
+		<div class="habit__progress"><span class="habit__progress-current">${current}</span>/<span class="habit__progress-total">${amount}</span> | <progress value="${current}" max="${amount}"></progress></div>
 		<div class="habit__update">
-		<button class="btn btn-secondary" data-update="-25">-25</button>
-		<button class="btn btn-secondary" data-update="-1">-1</button>
-		<button class="btn btn-secondary" data-update="+1">+1</button>
-		<button class="btn btn-secondary" data-update="+25">+25</button>
+			<button class="btn btn-secondary" data-update="-25">-25</button>
+			<button class="btn btn-secondary" data-update="-1">-1</button>
+			<button class="btn btn-secondary" data-update="+1">+1</button>
+			<button class="btn btn-secondary" data-update="+25">+25</button>
 		</div>
 		<div>${remaining} left</div>
 	</div>
@@ -41,15 +41,20 @@ const addHabit = (name, amount, period, current = 0) => {
 	elements.habitList.insertAdjacentHTML('beforeend', markup);
 }
 
-const updateCount = (update, current = 0) => {
+const updateCount = (update, current, total) => {
 	const updateType = update.charAt(0);
-	const updateValue = update.substring(1);
+	const updateValue = parseInt(update.substring(1));
+	let currentValue = parseInt(current.textContent);
+	const totalValue = parseInt(total.textContent);
 
 	if (updateType === '+') {
-		current += updateValue;
+		currentValue += updateValue;
 	} else if (updateType === '-') {
-		current -= updateValue;
+		currentValue -= updateValue;
 	}
+
+	current.parentElement.querySelector('progress').value = currentValue;
+	current.textContent = currentValue;
 };
 
 document.querySelector('.habit-form').addEventListener('submit', e => {
@@ -62,7 +67,9 @@ document.querySelector('.habit-form').addEventListener('submit', e => {
 
 document.querySelector('.habit-list').addEventListener('click', e => {
 	const update = e.target.dataset.update;
+	const current = e.target.parentElement.parentElement.querySelector('.habit__progress-current');
+	const total = e.target.parentElement.parentElement.querySelector('.habit__progress-total');
 	if (update) {
-		updateCount(update);
+		updateCount(update, current, total);
 	}
 });
